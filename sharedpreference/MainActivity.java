@@ -1,6 +1,7 @@
-package com.example.sharedpreference;
+package com.example.sharedperference;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,85 +11,88 @@ import android.widget.Toast;
 
 import com.example.sharedperference.R;
 
-public class MainActivity extends AppCompatActivity {
 
-    EditText username, mobilenumber, email, password, confirmpassword;
+public class MainActivity extends AppCompatActivity {
+    EditText user,mob,pass1,pass2,email;
     Button submit;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_main);
+        setContentView(com.example.sharedperference.R.layout.activity_main);
 
-        username = findViewById(R.id.username);
-        mobilenumber = findViewById(R.id.mobilenumber);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        confirmpassword = findViewById(R.id.confirmpassword_confirm);
-        submit = findViewById(R.id.loginbtn);
-
-        sharedPreferences = getSharedPreferences("userdetails", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
+        user=findViewById(R.id.user);
+        mob=findViewById(R.id.mob);
+        email=findViewById(R.id.email);
+        pass1=findViewById(R.id.pass1);
+        pass2=findViewById(R.id.pass2);
+        submit=findViewById(R.id.sub);
+        sharedPreferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
+        editor =sharedPreferences.edit();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String usernames = username.getText().toString().trim();
-                String mobileli = mobilenumber.getText().toString().trim();
-                String emai1s = email.getText().toString().trim();
-                String pass1s = password.getText().toString().trim();
-                String pass2s = confirmpassword.getText().toString().trim();
+            public void onClick(View v) {
+                String username=user.getText().toString().trim();
+                String mobno=mob.getText().toString().trim();
+                String mail=email.getText().toString().trim();
+                String passw1=pass1.getText().toString().trim();
+                String passw2=pass2.getText().toString().trim();
 
-                if (usernames.isEmpty()) {
-                    username.setError("username is empty");
-                    username.requestFocus();
+                if(username.isEmpty())
+                {
+                    user.setError("username is empty");
+                    user.requestFocus();
                     return;
                 }
 
-                if (mobileli.isEmpty()) {
-                    mobilenumber.setError("mobile number is empty");
-                    mobilenumber.requestFocus();
+                if(mobno.isEmpty())
+                {
+                    mob.setError("Mobile Number is empty");
+                    mob.requestFocus();
                     return;
                 }
 
-                if (emai1s.isEmpty()) {
-                    email.setError("input email");
+                if(mail.isEmpty())
+                {
+                    email.setError("Email is empty");
                     email.requestFocus();
                     return;
                 }
 
-                if (pass1s.isEmpty()) {
-                    password.setError("enter password");
-                    password.requestFocus();
+                if(passw1.isEmpty())
+                {
+                    pass1.setError("Enter password");
+                    pass1.requestFocus();
                     return;
                 }
 
-                if (pass2s.isEmpty()) {
-                    confirmpassword.setError("confirm password");
-                    confirmpassword.requestFocus();
+                if(passw2.isEmpty())
+                {
+                    pass2.setError("Confirm Password");
+                    pass2.requestFocus();
                     return;
                 }
 
-                if (pass1s.length() < 6) {
-                    password.setError("length must be minimum 6 characters");
-                    password.requestFocus();
+                if(passw1.length()<6)
+                {
+                    pass1.setError("length must be minimum 6 characters");
+                    pass1.requestFocus();
                     return;
                 }
 
-                if (!pass1s.equals(pass2s)) {
-                    confirmpassword.setError("passwords do not match");
-                    confirmpassword.requestFocus();
+                if(!passw1.equals(passw2))
+                {
+                    pass2.setError("Password not match");
+                    pass2.requestFocus();
                     return;
                 }
 
-                Toast.makeText(MainActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-
-                editor.putString("keyusername", usernames);
-                editor.putString("keymobile", mobileli);
-                editor.putString("keyemail", emai1s);
-                editor.putString("keypassword", pass1s);
+                Toast.makeText(MainActivity.this,"Registration successful",Toast.LENGTH_SHORT).show();
+                editor.putString("keyusername",username);
+                editor.putString("keymobile",mobno);
+                editor.putString("keyemail",mail);
+                editor.putString("keypassword",passw2);
                 editor.apply();
             }
         });
